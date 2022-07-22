@@ -62,3 +62,4 @@ C:\Users\User\source\repos\DrivingSchool\DrivingSchool\obj\Debug\net6.0\refint\D
 C:\Users\User\source\repos\DrivingSchool\DrivingSchool\obj\Debug\net6.0\DrivingSchool.pdb
 C:\Users\User\source\repos\DrivingSchool\DrivingSchool\obj\Debug\net6.0\DrivingSchool.genruntimeconfig.cache
 C:\Users\User\source\repos\DrivingSchool\DrivingSchool\obj\Debug\net6.0\ref\DrivingSchool.dll
+C:\Users\User\source\repos\DrivingSchool\DrivingSchool\bin\Debug\net6.0\appsettings.json
