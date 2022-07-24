@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using DrivingSchool.Controllers;
-using DrivingSchool.Model;
 using DrivingSchool.Model.DatabaseModels;
+using DrivingSchool.Database;
 
 namespace DrivingSchool
 {

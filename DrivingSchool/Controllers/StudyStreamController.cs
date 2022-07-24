@@ -1,4 +1,4 @@
-﻿using DrivingSchool.Model;
+﻿using DrivingSchool.Database;
 using DrivingSchool.Model.DatabaseModels;
 using DrivingSchool.Model.DatabaseModels.SpResultModels;
 using Microsoft.Data.SqlClient;

@@ -1,4 +1,5 @@
-﻿using DrivingSchool.Model;
+﻿using DrivingSchool.Database;
+using DrivingSchool.Model;
 using DrivingSchool.Model.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 

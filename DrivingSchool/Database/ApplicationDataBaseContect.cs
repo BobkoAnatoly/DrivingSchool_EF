@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using DrivingSchool.Model.DatabaseModels.SpResultModels;
 
-namespace DrivingSchool.Model
+namespace DrivingSchool.Database
 {
     public class ApplicationDataBaseContext : DbContext
     {
