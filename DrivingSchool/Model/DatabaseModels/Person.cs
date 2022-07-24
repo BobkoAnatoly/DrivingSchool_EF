@@ -10,7 +10,6 @@ namespace DrivingSchool.Model.DatabaseModels
     
     public class Person
     {
-        
         public int Id { get; set; }
         [Required]
         [MaxLength(50)]

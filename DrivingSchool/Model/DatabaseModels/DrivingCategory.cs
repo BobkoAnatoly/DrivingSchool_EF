@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DrivingSchool.Model.DatabaseModels
 {
     public class DrivingCategory
     {
-        public int Id { get; set; }
+        [Key]
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
-        public IQueryable<StudyStream>? StudyStreams { get; set; }
+        public ICollection<StudyStream>? StudyStreams { get; set; }
     }
 }

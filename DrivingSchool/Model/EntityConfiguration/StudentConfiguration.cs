@@ -12,6 +12,7 @@ namespace DrivingSchool.Model.EntityConfiguration
             builder.HasOne(x => x.StudyStream)
                 .WithMany(x => x.Students)
                 .OnDelete(DeleteBehavior.Cascade);
+
         }
     }
 }

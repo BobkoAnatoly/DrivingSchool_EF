@@ -13,8 +13,6 @@ namespace DrivingSchool.Model.DatabaseModels
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }
 
-        public int StudyStreamId { get; set; }
-        public StudyStream StudyStream { get; set; }
         public IQueryable<Student>? Students { get; set; }
     }
 }

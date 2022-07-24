@@ -10,7 +10,7 @@ namespace DrivingSchool.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DrivingCategory",
+                name: "DrivingCategories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -19,16 +19,15 @@ namespace DrivingSchool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DrivingCategory", x => x.Id);
+                    table.PrimaryKey("PK_DrivingCategories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teachers",
+                name: "People",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
@@ -36,11 +35,11 @@ namespace DrivingSchool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.PrimaryKey("PK_People", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Vehicle",
+                name: "Vehicles",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -49,11 +48,11 @@ namespace DrivingSchool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Vehicle", x => x.Id);
+                    table.PrimaryKey("PK_Vehicles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "StudyStream",
+                name: "StudyStreams",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -64,17 +63,57 @@ namespace DrivingSchool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudyStream", x => x.Id);
+                    table.PrimaryKey("PK_StudyStreams", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_StudyStream_DrivingCategory_DrivingCategoryId",
+                        name: "FK_StudyStreams_DrivingCategories_DrivingCategoryId",
                         column: x => x.DrivingCategoryId,
-                        principalTable: "DrivingCategory",
+                        principalTable: "DrivingCategories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Lesson",
+                name: "Teachers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    Salary = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teachers_People_Id",
+                        column: x => x.Id,
+                        principalTable: "People",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Students",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false),
+                    StudyStreamId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Students_People_Id",
+                        column: x => x.Id,
+                        principalTable: "People",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Students_StudyStreams_StudyStreamId",
+                        column: x => x.StudyStreamId,
+                        principalTable: "StudyStreams",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lessons",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -87,40 +126,39 @@ namespace DrivingSchool.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Lesson", x => x.Id);
+                    table.PrimaryKey("PK_Lessons", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Lesson_Teachers_TeacherId",
+                        name: "FK_Lessons_Teachers_TeacherId",
                         column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Lesson_Vehicle_VehicleId",
+                        name: "FK_Lessons_Vehicles_VehicleId",
                         column: x => x.VehicleId,
-                        principalTable: "Vehicle",
+                        principalTable: "Vehicles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Students",
+                name: "Services",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StudyStreamId = table.Column<int>(type: "int", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    StudentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Students", x => x.Id);
+                    table.PrimaryKey("PK_Services", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_StudyStream_StudyStreamId",
-                        column: x => x.StudyStreamId,
-                        principalTable: "StudyStream",
+                        name: "FK_Services_Students_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Students",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -136,9 +174,9 @@ namespace DrivingSchool.Migrations
                 {
                     table.PrimaryKey("PK_LessonStudent", x => new { x.LessonsId, x.StudentsId });
                     table.ForeignKey(
-                        name: "FK_LessonStudent_Lesson_LessonsId",
+                        name: "FK_LessonStudent_Lessons_LessonsId",
                         column: x => x.LessonsId,
-                        principalTable: "Lesson",
+                        principalTable: "Lessons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -149,35 +187,38 @@ namespace DrivingSchool.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "PaidService",
-                columns: table => new
+            migrationBuilder.InsertData(
+                table: "DrivingCategories",
+                columns: new[] { "Id", "CategoryName" },
+                values: new object[,]
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
-                },
-                constraints: table =>
+                    { 1, "А" },
+                    { 2, "B" },
+                    { 3, "C" },
+                    { 4, "CE" },
+                    { 5, "D" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Services",
+                columns: new[] { "Id", "Description", "Discriminator", "Price" },
+                values: new object[,]
                 {
-                    table.PrimaryKey("PK_PaidService", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PaidService_Students_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Students",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    { 1, "Дополнительное занятие по вождению на категорию \"А\" 15 рублей", "Service", 0m },
+                    { 2, "Дополнительное занятие по управлению автомобилем категории \"В\" 35 руб", "Service", 0m },
+                    { 3, "Дополнительное занятие по управлению автомобилем категории \"С\" 40 руб", "Service", 0m },
+                    { 4, "Дополнительное занятие по управлению составом транспортных средств категории \"СЕ\" 40 руб", "Service", 0m },
+                    { 5, "Дополнительное занятие по управлению автобусом (категория «D») 40 руб", "Service", 0m }
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lesson_TeacherId",
-                table: "Lesson",
+                name: "IX_Lessons_TeacherId",
+                table: "Lessons",
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lesson_VehicleId",
-                table: "Lesson",
+                name: "IX_Lessons_VehicleId",
+                table: "Lessons",
                 column: "VehicleId");
 
             migrationBuilder.CreateIndex(
@@ -186,8 +227,8 @@ namespace DrivingSchool.Migrations
                 column: "StudentsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaidService_StudentId",
-                table: "PaidService",
+                name: "IX_Services_StudentId",
+                table: "Services",
                 column: "StudentId");
 
             migrationBuilder.CreateIndex(
@@ -196,8 +237,8 @@ namespace DrivingSchool.Migrations
                 column: "StudyStreamId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudyStream_DrivingCategoryId",
-                table: "StudyStream",
+                name: "IX_StudyStreams_DrivingCategoryId",
+                table: "StudyStreams",
                 column: "DrivingCategoryId");
         }
 
@@ -207,10 +248,10 @@ namespace DrivingSchool.Migrations
                 name: "LessonStudent");
 
             migrationBuilder.DropTable(
-                name: "PaidService");
+                name: "Services");
 
             migrationBuilder.DropTable(
-                name: "Lesson");
+                name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "Students");
@@ -219,13 +260,16 @@ namespace DrivingSchool.Migrations
                 name: "Teachers");
 
             migrationBuilder.DropTable(
-                name: "Vehicle");
+                name: "Vehicles");
 
             migrationBuilder.DropTable(
-                name: "StudyStream");
+                name: "StudyStreams");
 
             migrationBuilder.DropTable(
-                name: "DrivingCategory");
+                name: "People");
+
+            migrationBuilder.DropTable(
+                name: "DrivingCategories");
         }
     }
 }
